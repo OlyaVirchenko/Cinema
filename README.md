@@ -1,5 +1,6 @@
-План:
+# План:
 
+## Выполнено:
 1.	Начать проект на Laravel  https://laravel.com/docs/11.x/installation 
 2.	Выгрузить проект в git 
 3.	Создание моделей с миграциями https://laravel.com/docs/11.x/eloquent 
@@ -18,6 +19,7 @@
 12.	Установка Laravel ui
 
 
+## Не выполнено:
 13.	Файл web.php
 14.	Cоздание middleware php artisan make:middleware название
 15.	Файл kernel (его нет в Laravel 11) – что вместо него?
