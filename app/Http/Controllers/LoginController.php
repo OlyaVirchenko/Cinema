@@ -3,62 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function authenticate(Request $request)
     {
-        //
+        echo 'LoginController->authenticate' . PHP_EOL . $request->input('mail');
+
+        $user = User::query()->firstWhere(['email' => $request->input('mail')]);                              
+        if ($user && Hash::check($request->input('pwd'), $user->password)) {
+            Auth::login($user);
+            return redirect('/admin/index');
+        }
+        $text = 'Пользователь не найден или введён неверный пароль.';
+        return redirect()->back()->withErrors(['mail' => $text]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function form()
     {
-        //
+        return view('admin.login');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function adminLogin()
+    { 
+        return view('auth.app_login');
     }
 }

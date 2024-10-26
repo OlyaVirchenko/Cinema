@@ -15,7 +15,9 @@ class Movie extends Model
 
     protected $fillable = [
         'title',
-        'duration'
+        'duration',
+        'description',
+        'country'
     ];
 
     public function sesions(): HasMany {

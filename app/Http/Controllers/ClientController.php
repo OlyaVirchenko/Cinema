@@ -3,62 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hall;
+use App\Models\Movie;
+use App\Models\Seat;
+use App\Models\Session;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $halls = Hall::query()->where(['is_open' => true])->get;
+        $movies = Movie::with('sessions')->get();
+        $seances = Session::all();
+
+        return view('client.index', [
+            'halls' => $halls,
+            'movies' => $movies,
+            'seances' => $seances,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function hall(int $id)
     {
-        //
+        $seance = Session::with(['movie', 'hall']) -> get()->find($id);
+        $seats = Seat::query()->where(['hall_id' => $seance->hall_id])->get();
+        $hall = Hall::query()->find($seance->movie_id);
+        $movie = Movie::query()->find($seance->hall_id);
+        return view('client.hall', [
+            'seance' => $seance, 
+            'seats'=> $seats, 
+            'hall' => $hall,
+            'movie' => $movie]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function payment(Request $request, int $id)
     {
-        //
+        $seance = Session::with(['movie', 'hall'])->get()->find($id);
+        return view('client.payment', ['seance' => $seance]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function ticket(Request $request, int $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $seance = Session::with(['movie', 'hall'])->get()->find($id);
+        return view('client.ticket', ['seance' => $seance]);
     }
 }

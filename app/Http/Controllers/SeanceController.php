@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Session;
+use App\Models\Movie;
+use App\Models\Seat;
 
 
 class SeanceController extends Controller
@@ -31,9 +33,25 @@ class SeanceController extends Controller
         return response()->json($seancesOut);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function addSeance(Request $request, int $id)
+    {
+        $seances = Session::all();
+        Session::query()->delete();
+        $seancesIn = $request->json();
+        foreach ($seancesIn as $seanceIn) {
+            $s = 0;
+            foreach ($seances as $seance) {
+                if ($seanceIn['id'] === $seance->id) {
+                    Session::query()->create($seanceIn);                    
+                    $s++;
+                }
+            }
+            if ($s == 0) Session::query()->create($seanceIn);
+        }
+        $seancesOut = Session::all();
+        return response()->json($seancesOut);
+    }
+
     public function addSeats(Request $request, Session $seance)
     {
         $seance->selected_seats = $request->input('selected_seats');
