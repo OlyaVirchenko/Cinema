@@ -1,26 +1,15 @@
-# План:
+# План по развертыванию проекта:
 
-## Выполнено:
-1.	Начать проект на Laravel  https://laravel.com/docs/11.x/installation 
-2.	Выгрузить проект в git 
-3.	Создание моделей с миграциями https://laravel.com/docs/11.x/eloquent 
-4.	Модели https://laravel.com/docs/11.x/eloquent-relationships 
-5.	Миграции https://laravel.com/docs/11.x/migrations#column-method-json
-6.	Создание миграции sessions с помощью (иначе выдавало ошибку)
-   6.1	In the console i wrote => php artisan tinker
-   6.2  Then again in console => Schema::drop('users')
-   6.3	At the end => php artisan migrate
-
-7.	Появилась ошибка на сервере с миграцией sessions
-8.	Значение Session_driver = file (было database) в файле .env .и env.example
-9.	Ошибка пропала
-10.	Создание ресурсных контроллеров – может в этом проекте не нужны ресурсные контролллеры?
-11.	Добавление логики маршрутов ресурсных контроллеров (не сделано)
-12.	Установка Laravel ui
-13.	Файл web.php
-14.	Cоздание middleware php artisan make:middleware название
-15.	Файл kernel (его нет в Laravel 11) – что вместо него?
-16.	Добавить миграцию для таблицы user
-17.	Настроить файл с миграцией
-18.	Папка recourses – css, views, blades
+1. Сделать клонирование проекта git clone https://github.com/AnnaBruzgalova/diplom-cinema.git
+2. Открыть проект в IDE
+3. Выполнить в терминале команду для установки зависимостей npm install
+4. Выполнить в терминале команду для установки зависимостей composer install
+5. Создать файла окружения .env из .env.example и сделать настройки БД (DB_CONNECTION=sqlite, DB_DATABASE=database\database.sqlite)
+6. Cоздать файл базы данных database\database.sqlite
+7. Выполнить в терминале команду для генерации APP_KEY в env-файле php artisan key:generate
+8. Выполнить в терминале команду для применения миграций (создания таблиц БД) php artisan migrate
+9. Выполнить в терминале команду для наполнителей php artisan db:seed
+10. Выполнить в терминале команду для запуска локального сервера php artisan serve
+11. Открыть браузер с адресом http://127.0.0.1:8000/ и зарегистрироваться в административной части с логином demo@demo.ru и паролем 123, затем войти для заполнения данных о залах и сеансах
+12. Открыть браузер с адресом http://127.0.0.1:8000/ и войти в клиентскую как гость для выбора сеанса фильма и покупки билета
 
